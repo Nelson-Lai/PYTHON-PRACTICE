@@ -91,6 +91,7 @@ class TicTacToe:
                 print(self.availableSet)
                 move = input('>>')
                 if move not in self.availableSet:
+                    print('Illegal Move')
                     continue
                 self.placeMarker(move,'x')
                 self.displayBoard()
@@ -116,7 +117,10 @@ while True:
     if newGame == 'Y':
         game = TicTacToe()
         newGame = input('New Game? [Y/N]:')
-    else:
+    elif newGame == 'N':
         break
+    else:
+        print('bro put a real input')
+        newGame = input('New Game? [Y/N]:')
 
 pass
