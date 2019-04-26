@@ -60,7 +60,7 @@ class TicTacToe:
 
         diagonalsum1 = 0
         diagonalsum2 = 0
-        for diagonal in range(2):
+        for diagonal in range(3):
             diagonalsum1 += self.backBoard[diagonal][diagonal]
             diagonalsum2 += self.backBoard[diagonal][2-diagonal]
 
