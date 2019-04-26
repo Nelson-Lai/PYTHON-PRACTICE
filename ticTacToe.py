@@ -66,8 +66,7 @@ class TicTacToe:
 
         if diagonalsum1 == 3 or diagonalsum2 == 3:
             return 1
-        elif diagonalsum2 == -3 or diagonalsum2 == -3:
-
+        elif diagonalsum1 == -3 or diagonalsum2 == -3:
             return -1
         return 0
 
