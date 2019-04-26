@@ -10,8 +10,8 @@ class TicTacToe:
 
 
 
-    boardLocations = {'topLeft':[0,1],'topMid':[0,5],'topRight':[0,9],'midLeft':[2,1],'midMid':[2,5],'midRight':[2,9],'botLeft':[4,1],'botMid':[4,5],'botRight':[4,9]}
-    backLocations = {'topLeft':[0,0],'topMid':[0,1],'topRight':[0,2],'midLeft':[1,0],'midMid':[1,1],'midRight':[1,2],'botLeft':[2,0],'botMid':[2,1],'botRight':[2,2]}
+    boardLocations = {'topLeft':[0,1],'topMid':[0,5],'topRight':[0,9],'midLeft':[2,1],'center':[2,5],'midRight':[2,9],'botLeft':[4,1],'botMid':[4,5],'botRight':[4,9]}
+    backLocations = {'topLeft':[0,0],'topMid':[0,1],'topRight':[0,2],'midLeft':[1,0],'center':[1,1],'midRight':[1,2],'botLeft':[2,0],'botMid':[2,1],'botRight':[2,2]}
 
 
     def newGameboard(self):
@@ -23,7 +23,7 @@ class TicTacToe:
         '   |   |   ',
         '   |   |   '
         ]
-        self.availableSet = set(['topLeft','topMid','topRight','midLeft','midMid','midRight','botLeft','botMid','botRight'])
+        self.availableSet = set(['topLeft','topMid','topRight','midLeft','center','midRight','botLeft','botMid','botRight'])
         self.backBoard = [[0,0,0],[0,0,0],[0,0,0]]
 
     def placeMarker(self,location: str, mark: str):
@@ -112,5 +112,12 @@ class TicTacToe:
                 print('Draw Game!')
                 break
 
+newGame = 'Y'
+while True:
+    if newGame == 'Y':
+        game = TicTacToe()
+        newGame = input('New Game? [Y/N]:')
+    else:
+        break
 
-game = TicTacToe()
+pass
