@@ -12,7 +12,7 @@ class Solution:
                 i = j = k = 0
 
                 # Copy data to temp arrays L[] and R[]
-                while i < len(L) and j < len(R): 
+                while i < len(L) and j < len(R):
                     if L[i] < R[j]:
                         nums[k] = L[i]
                         i+=1
@@ -27,7 +27,7 @@ class Solution:
                     i+=1
                     k+=1
 
-                while j < len(R): 
+                while j < len(R):
                     nums[k] = R[j]
                     j+=1
                     k+=1
