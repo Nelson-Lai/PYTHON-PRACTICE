@@ -9,7 +9,7 @@ class Board:
         self.homeBoard = [['~' for x in range(10)] for y in range(10)]
         self.enemyBoard = [['~' for x in range(10)] for y in range(10)]
 
-    def printBoard(self, dev = 0):
+    def printBoard(self):
         print(self.name)
         print('                    HOME BOARD                                                  ENEMY BOARD')
         for index in range(10):
@@ -31,7 +31,10 @@ class Game:
     letters = {'A':0,'B':1,'C':2,'D':3,'E':4,'F':5,'G':6,'H':7,'I':8,'J':9}
     lettersList = ['A','B','C','D','E','F','G','H','I','J']
     numbersSet = set(['1','2','3','4','5','6','7','8','9','0'])
-    def __init__(self, dev = 0):
+    playerMoves = set()
+    cpuMoves = set()
+
+    def __init__(self, dev = False):
         self.player1 = Board('Player 1')
         self.player2 = Board('Player 2')
         self.devMode = dev
@@ -128,8 +131,8 @@ class Game:
                 playerBoard = self.player1
             elif player == 2:
                 playerBoard = self.player2
-            playerBoard.printBoard()
             if start == None or end == None:
+                playerBoard.printBoard()
                 print('Placing a ship of distance ' + str(distance))
                 print('Starting Coordinate:')
                 startCoord = self.takeInput()
@@ -160,11 +163,61 @@ class Game:
 
             for index in points:
                 playerBoard.placeMark(index[0],index[1],'@','home')
-            playerBoard.printBoard()
             break
 
     def playerMove(self):
-        pass
+        while True:
+            self.player1.printBoard()
+            print('Where should we attack?')
+            move = self.takeInput()
+            row, column = move
+            if str(move) not in self.playerMoves:
+                self.playerMoves.add(str(move))
+            else:
+                print("We've attacked there before!")
+                continue
+            if self.player2.homeBoard[self.letters[row]][int(column)] == '@':
+                mark = 'X'
+                print('HIT!')
+            else:
+                mark = 'O'
+                print('MISS...')
+
+            self.player1.placeMark(row, column, mark,'enemy')
+            self.player2.placeMark(row, column, mark, 'home')
+            break
+
+    def cpuMove(self):
+        while True:
+            row = random.choice(self.lettersList)
+            column = random.choice(list(self.numbersSet))
+            move = [row, column]
+            if str(move) not in self.cpuMoves:
+                self.cpuMoves.add(str(move))
+            else:
+                continue
+            print('Computer Tries: ' + row + column)
+            if self.player1.homeBoard[self.letters[row]][int(column)] == '@':
+                mark = 'X'
+                print('HIT!')
+            else:
+                mark = 'O'
+                print('MISS...')
+
+            self.player2.placeMark(row, column, mark,'enemy')
+            self.player1.placeMark(row, column, mark, 'home')
+            break
+
+    def isVictorious(self, player):
+        if player == 1:
+            playerCheck = self.player2
+        elif player == 2:
+            playerCheck = self.player1
+        for row in playerCheck.homeBoard:
+            for element in row:
+                if element == '@':
+                    return False
+        return True
 
     def gameInitialization(self):
         print('Hello Player, we need to place ships on your side before proceeding.')
@@ -173,19 +226,43 @@ class Game:
             self.randomPlacement(1)
         else:
             self.manualPlacement(1)
+        self.player1.printBoard()
         input('Randomizing CPU Battleship Locations, press Enter to Continue')
         self.randomPlacement(2)
-        self.player1.printBoard()
-        self.player2.printBoard()
+        if self.devMode == True:
+            print('DEVELOPER MODE ON: ENEMY BOARD SHOWN')
+            self.player2.printBoard()
+        self.gameLoop()
+
+    def endGame(self, player):
+        if player == 1:
+            print('PLAYER 1 HAS WON!')
+        elif player == 2:
+            print('CPU HAS WON!')
+        print('                PLAYER 1 BOARD                                                    CPU BOARD')
+        for index in range(10):
+            print(self.player1.homeBoard[index],'          ',self.player2.homeBoard[index])
+
 
     def gameLoop(self):
-        pass
+        while True:
+            self.playerMove()
+            if self.isVictorious(1):
+                self.endGame(1)
+                break
+            input("Computer's Turn")
+            self.cpuMove()
+            if self.isVictorious(2):
+                self.endGame(2)
+                break
 
 
 
+while True:
+    game = Game()
+    again = input('Play Again? [Y/N]')
+    if again == 'Y' or again == 'y':
+        continue
+    else:
+        break
 
-
-
-
-
-game = Game()
