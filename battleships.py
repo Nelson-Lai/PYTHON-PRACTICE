@@ -133,7 +133,7 @@ class Game:
                 playerBoard = self.player2
             if start == None or end == None:
                 playerBoard.printBoard()
-                print('Placing a ship of distance ' + str(distance))
+                print('Placing a ship of length ' + str(distance))
                 print('Starting Coordinate:')
                 startCoord = self.takeInput()
                 print('Ending Coordinate: ')
@@ -259,7 +259,7 @@ class Game:
 
 
 while True:
-    game = Game()
+    game = Game(dev = True)
     again = input('Play Again? [Y/N]')
     if again == 'Y' or again == 'y':
         continue
